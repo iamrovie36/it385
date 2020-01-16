@@ -9,4 +9,10 @@ print(my_array[2])
 print(my_array[-1])
 print(my_array)
 
+my_array.append(99)
+my_array.insert(1,0)
+print(my_array.tolist())
+
+
+
 
