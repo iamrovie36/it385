@@ -19,11 +19,23 @@ def power(num, power = 2):
 def cube(x):
 	return x * x * x
 
+# Function that adds variable number of numbers
+def multi_add(*args):
+	result = 0
+	for x in args:
+		result = result + x
+	return result
+
 # call functions
-cube(3)
-print(cube(5))
-myCube = cube(42)
-print(myCube)
+print(multi_add(6, 7))
+print(multi_add(234,324, 52, 5234, 56, 2345, 234553, 23452))
+
+
+
+#cube(3)
+#print(cube(5))
+#myCube = cube(42)
+#print(myCube)
 
 
 
