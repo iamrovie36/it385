@@ -15,7 +15,18 @@ def power(num, power = 2):
 		result = result * num
 	print(result)
 
+# Function that retunrs a value
+def cube(x):
+	return x * x * x
+
 # call functions
+cube(3)
+print(cube(5))
+myCube = cube(42)
+print(myCube)
+
+
+
 #func1()
 #print(func1())
 #print(func1)
@@ -23,9 +34,9 @@ def power(num, power = 2):
 #addNums(7, 11)
 #addNums(val2 = 11, val1 = 7)
 
-power(5)
-power(5,2)
-power(5,3)
+#power(5)
+#power(5,2)
+#power(5,3)
 
 
 
