@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: Make folder under tmp directory
+    file:
+      dest: /tmp/ans
+      state: directory
+
