@@ -6,9 +6,9 @@
       dest: /tmp/ans
       state: directory
   - name: Create user
-    user: 
-      name: BillNyeTheUserGuy
-      password: '$6$VLf.VTSEcFbvWGM2$micm2TmMIRqnZK9OBgrM3FYiYau9ugJ6bV0Uw8AsvZyRqqDROi.0bsf8aRndkBStweLy/8RoO4zIZDsIqpCKS1'
+    user:
+      name: egoad1
+      password: RubberDuck!
     become: yes
 
 - hosts: db
@@ -17,4 +17,12 @@
     yum:
       name: "mariadb-server"
       state: present
+    become: yes
+
+- hosts: web
+  tasks:
+  - name: install httpd*
+    yum:
+      name: httpd
+      state: latest
     become: yes
