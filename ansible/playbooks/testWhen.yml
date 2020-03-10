@@ -1,0 +1,7 @@
+---
+- hosts: db2
+  tasks:
+  - name: Check for RedHat
+    when: ansible_os_family == "RedHat"
+    debug:
+      var: ansible_facts

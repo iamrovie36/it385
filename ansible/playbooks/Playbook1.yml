@@ -5,16 +5,18 @@
     file:
       dest: /tmp/ans
       state: directory
-  - name: Create user
-    user: 
-      name: BillNyeTheUserGuy
-      password: '$6$VLf.VTSEcFbvWGM2$micm2TmMIRqnZK9OBgrM3FYiYau9ugJ6bV0Uw8AsvZyRqqDROi.0bsf8aRndkBStweLy/8RoO4zIZDsIqpCKS1'
-    become: yes
-
-- hosts: db
-  tasks:
-  - name: Install mariadb
-    yum:
-      name: "mariadb-server"
-      state: present
-    become: yes
+  - name: Create sample file
+    file:
+      dest: /tmp/ans/all-file
+      state: touch
+    tags: create
+  - name: Remove sample file
+    file:
+      dest: /tmp/ans/all-file
+      state: absent
+    tags: remove
+  - name: Create another file
+    file:
+      dest: /tmp/ans/another-file
+      state: touch
+  

@@ -1,0 +1,88 @@
+---
+
+- hosts: routers
+  gather_facts: false
+  connection: local 
+  tasks:
+  - name: setup routing tables
+    ios_command:
+      commands: 
+      - ip route 0.0.0.0 0.0.0.0 192.168.0.100
+    register: routes
+
+- hosts: R1
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Name the devices
+    ios_command:
+      commands:
+      - hostname R1
+    register: namedR1
+
+- hosts: R2
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Name the devices
+    ios_command: 
+      commands:
+      - hostname R2
+    register: namedR2
+
+- hosts: S1
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Name the devices
+    ios_command:
+      commands:
+      - hostname S1
+    register: namedS1
+
+- hosts: S2
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Name the devices
+    ios_command:
+      commands:
+      - hostname S2
+    register: namedS2
+
+- hosts: all
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: basic configuration
+    ios_command: 
+      commands:
+      - no ip domain-lookup
+      - enable secret Ciscoenpa55
+      - line con 0
+      - pass Ciscoconpa55
+      - login
+      - exec-timeout 5
+      - security passwords min-length 10
+      - service password-encryption
+      - banner motd #Warning: Unauthorized Access is prohibited#
+      - line vty 0 15
+      - exec-timeout 5
+      - login block-for 180 attempts 4 within 120
+    register: config
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

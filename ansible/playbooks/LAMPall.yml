@@ -1,0 +1,81 @@
+---
+
+- hosts: all
+  tasks:
+  - name: Creating user (egoad/Rubberduck!)
+    user:
+      name: egoad
+      password: 'RubberDuck!' #This password wont work
+    become: yes
+    tags: setup
+  - name: Create user dannydevito
+    user: name='dannydevito' password='GetShorty'
+    become: yes
+    tags: setup
+
+- hosts: db
+  tasks:
+  - name: Install MariaDB
+    tags: setup
+    become: yes
+    yum: 
+      name: 'mariadb-server'
+      state: present
+  - name: Enable MariaDB (set to autostart)
+    tags: setup
+    service:
+      name: 'mariadb'
+      enabled: yes
+    become: yes
+  - name: Start MariaDB
+    tags: setup
+    service:
+      name: 'mariadb'
+      state: started
+    become: yes
+
+- hosts: web
+  tasks:
+  - name: Install Apache (httpd)
+    tags: setup
+    yum: name='httpd' state=present
+    become: yes
+  - name: Set Apache to run
+    tags: setup
+    service: name='httpd' state=started enabled=yes
+    become: yes
+  - name: Configure firewall
+    tags: setup
+    firewalld:
+      service: http
+      state: enabled
+      permanent: true
+    become: yes
+    notify:
+    - restart-firewall
+
+  handlers:
+    - name: restart-firewall
+      service:
+        name: firewalld
+        state: restarted
+      become: yes
+
+
+
+
+
+
+- hosts: all
+  tasks:
+  - name: Remove user (egoad/Rubberduck!)
+    tags: remove
+    user:
+      name: egoad
+      state: absent
+    become: yes
+  - name: Remove user dannydevito
+    tags: remove
+    user: name='dannydevito' state=absent
+    become: yes
+

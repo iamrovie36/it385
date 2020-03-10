@@ -1,0 +1,15 @@
+---
+
+- hosts: routers
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: show version
+    ios_command:
+      commands:
+      - show run | exclude !
+      - sh ver
+    register: version
+  - name: Report information
+    debug:
+      var: version

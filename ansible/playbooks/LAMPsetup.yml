@@ -1,0 +1,62 @@
+---
+- hosts: all
+  tasks:
+  - name: Creating user (egoad/Rubberduck!)
+    user:
+      name: egoad
+      password: 'RubberDuck!' # this password wont work
+    become: yes
+  - name: Create user dannydevito
+    user: name='dannydevito' password='GetShorty'
+    become: yes
+
+- hosts: db
+  tasks:
+  - name: Install MariaDB
+    become: yes
+    yum:
+      name: 'mariadb-server'
+      state: present
+  - name: Enable MariaDB (set to autostart)
+    service:
+      name: 'mariadb'
+      enabled: yes
+    become: yes
+  - name: Start MariaDB
+    service:
+      name: 'mariadb'
+      state: started
+    become: yes
+
+- hosts: web
+  tasks:
+  - name: Install Apache (httpd) 
+    yum: name='httpd' state=present
+    become: yes
+  - name: Set Apache to run
+    service: name'httpd' state=started enabled=yes
+    become: yes
+  - name: Configure Firewall
+    firewalld:
+      service: http
+      state: enabled
+      permanent: true
+    become: yes
+    notify:
+    - restart-firewall
+
+
+
+  handlers:
+  - name: restart-firewall
+  service:
+     name: firewalld
+     state: restarted
+  become: yes
+
+
+
+
+
+
+
